@@ -10,7 +10,7 @@ const fakeTasks = [
     { id: 5, task: 'Buy Food', done: false},
 ]
 export default function TaskList(){
-    const [tasks, setTasks] = useState(fakeTasks)
+    const [tasks, setTasks] = useState()
     useEffect(()=>{
         fetch('https://much-todo-am.uc.r.appspot.com/tasks')
         .then(response => response.json())
