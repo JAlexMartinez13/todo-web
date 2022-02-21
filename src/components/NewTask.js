@@ -33,7 +33,7 @@ export default function NewTask({ setTasks }) {
 
   return (
     <>
-      <h2>Add new task:</h2>
+      
       <Input.Search
         value={newTask}
         placeholder="Enter task"
