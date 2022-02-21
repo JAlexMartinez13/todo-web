@@ -1,39 +1,48 @@
-import { Input, Button } from "antd";
+import { Input } from "antd";
 import { useState } from "react";
 
-export default function NewTask() {
-  const [newTask, setNewTask] = useState('');
+export default function NewTask({ setTasks }) {
+  const [newTask, setNewTask] = useState("");
 
-  const taskObject = {
-    task: newTask
+  const handleInputText = (event) => {
+    setNewTask(event.target.value);
   };
 
   const handleButtonSubmit = () => {
-      fetch('https://much-todo-am.uc.r.appspot.com/tasks', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(taskObject),
+    if (newTask.trim() === "") {
+      return;
+    }
+    const taskObject = {
+      task: newTask,
+    };
+    fetch("https://much-todo-am.uc.r.appspot.com/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(taskObject),
+    })
+      .then(() => {
+        setNewTask("");
+        fetch("https://much-todo-am.uc.r.appspot.com/tasks")
+          .then((response) => response.json())
+          .then((data) => setTasks(data));
       })
-      .then(response => response.json())
-      .then(data => console.log('Data was added', data))
-      .catch(err => alert(err))
-  }
-
-  const handleInputtext = event => {
-    setNewTask(event.target.value)
-  }
-    console.log('newTask state here->>', newTask)
+      .catch((err) => alert(err));
+  };
 
   return (
     <>
-        <h2>Add new task:</h2>
-        <Input
-          placeholder="Enter task"
-          onChange={(event) => handleInputtext(event)}
-        />
-        <button onClick={handleButtonSubmit}> Send new task to API</button>
+      <h2>Add new task:</h2>
+      <Input.Search
+        value={newTask}
+        placeholder="Enter task"
+        enterButton='Add Task'
+        size='large'
+        onSearch={handleButtonSubmit}
+        onChange={handleInputText}
+      />
     </>
   );
 }
+      
