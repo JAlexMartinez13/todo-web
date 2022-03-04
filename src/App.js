@@ -10,13 +10,14 @@ function App() {
       style={{position: 'fixed',
        zIndex:10,
        width: '100%',
+       textAlign:'center',
        color:'whitesmoke'}}>
          Much Todo
          </Layout.Header>
       <Layout.Content
       style={{
         padding: '0 50px',
-        marginTop: 64
+        marginTop: 64,
       }}>
      <Main />
       </Layout.Content>
